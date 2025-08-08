@@ -1,6 +1,4 @@
 import Dashboard from '@/components/Dashboard';
-import UseEffectShowcase from '@/components/UseEffectShowcase';
-import UseCallbackShowcase from '@/components/UseCallbackShowcase';
 
 export default function Home() {
   return (
@@ -8,32 +6,22 @@ export default function Home() {
       <header className="header">
         <div className="container">
           <div className="header-content">
-            <h1>🚀 React Mastery Tutorial</h1>
+            <h1>🚀 React 精通教程</h1>
             <p className="header-subtitle">
-              Master the 8 essential React patterns that cover 95% of use cases
+              掌握覆盖 95% 使用场景的 8 个核心 React 模式
             </p>
           </div>
         </div>
       </header>
-      
+
       <main>
         <Dashboard />
-        
-        {/* useEffect Comprehensive Examples */}
-        <section className="container mx-auto px-6 py-8">
-          <UseEffectShowcase />
-        </section>
-        
-        {/* useCallback Comprehensive Examples */}
-        <section className="container mx-auto px-6 py-8">
-          <UseCallbackShowcase />
-        </section>
       </main>
-      
+
       <footer className="footer">
         <div className="container">
           <p>
-            Built for teaching React fundamentals to vibe coders and developers who want to stop getting stuck with AI tools
+            专为教授 React 基础知识而构建，帮助开发者掌握核心概念，不再被 AI 工具困扰
           </p>
         </div>
       </footer>
