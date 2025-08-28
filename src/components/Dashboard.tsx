@@ -491,9 +491,6 @@ function ButtonShowcase() {
         <Button disabled onClick={() => alert('永远不会触发')}>
           禁用按钮
         </Button>
-        <Button variant='primary' onClick={() => alert('Sean 很棒!')}>
-          Sean 按钮
-        </Button>
       </div>
     </div>
   );

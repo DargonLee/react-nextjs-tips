@@ -1,17 +1,32 @@
 @import "tailwindcss";
 
+/*
+🎯 CSS变量 - 主题系统的基础
+• CSS变量允许动态主题切换
+• :root 定义全局变量
+• var() 函数使用变量
+• 类似于编程语言中的常量定义
+*/
+
 :root {
+  /* 基础颜色 */
   --background: #ffffff;
   --foreground: #2e3440;
+
+  /* 卡片颜色 */
   --card: #ffffff;
   --card-foreground: #2e3440;
   --border: #e5e7eb;
+
+  /* 语义化颜色 */
   --primary: #6366f1;
   --primary-foreground: #ffffff;
   --secondary: #f8fafc;
   --secondary-foreground: #1e293b;
   --destructive: #dc2626;
   --destructive-foreground: #ffffff;
+
+  /* 辅助颜色 */
   --muted: #f1f5f9;
   --muted-foreground: #64748b;
   --accent: #f0f9ff;
@@ -27,25 +42,42 @@
   --font-mono: var(--font-geist-mono);
 }
 
-/* Dark theme class */
+/*
+🌙 深色主题 - 演示CSS变量的动态特性
+• 通过重新定义变量实现主题切换
+• JavaScript可以动态添加/移除类名
+• 所有使用var()的元素自动更新
+*/
 .dark {
+  /* 基础颜色 - 深色版本 */
   --background: #0f172a;
   --foreground: #e2e8f0;
+
+  /* 卡片颜色 - 深色版本 */
   --card: #1e293b;
   --card-foreground: #e2e8f0;
   --border: #334155;
+
+  /* 语义化颜色 - 深色版本 */
   --primary: #818cf8;
   --primary-foreground: #1e293b;
   --secondary: #334155;
   --secondary-foreground: #e2e8f0;
+
+  /* 辅助颜色 - 深色版本 */
   --muted: #334155;
   --muted-foreground: #94a3b8;
   --accent: #1e293b;
   --accent-foreground: #60a5fa;
 }
 
-/* Light theme class (same as :root defaults) */
+/*
+☀️ 浅色主题 - 显式定义（与:root相同）
+• 确保主题切换的一致性
+• 便于维护和理解
+*/
 .light {
+  /* 与:root相同的颜色定义 */
   --background: #ffffff;
   --foreground: #2e3440;
   --card: #ffffff;
@@ -65,19 +97,33 @@
   --warning: #ea580c;
 }
 
+/*
+🎨 基础样式 - 全局设置
+• 使用CSS变量实现主题响应
+• 系统字体栈提供最佳可读性
+• 合理的行高提升阅读体验
+*/
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
   line-height: 1.6;
+  margin: 0;
+  padding: 0;
 }
 
-/* Typography */
+/*
+📝 排版系统 - 一致的文本层次
+• 使用rem单位实现可缩放设计
+• 合理的字重和行高
+• 统一的间距系统
+*/
 h1 {
   font-size: 2rem;
   font-weight: 700;
   line-height: 1.2;
   margin: 0;
+  color: var(--foreground);
 }
 
 h2 {
@@ -99,25 +145,36 @@ h3 {
 p {
   margin: 0 0 0.75rem 0;
   line-height: 1.6;
+  color: var(--foreground);
 }
 
-/* Layout */
+/*
+🏗️ 布局系统 - 响应式容器和网格
+• Flexbox实现灵活布局
+• CSS Grid用于复杂布局
+• 响应式设计原则
+• 语义化的类名
+*/
+
+/* 主容器 - 限制最大宽度并居中 */
 .container {
   max-width: 1200px;
-  align-items: center;   /* Center all children horizontally */
   margin: 0 auto;
   padding: 0 1.5rem;
 }
 
+/* 仪表板中心布局 - 垂直居中的主要内容区 */
 .dashboard-center {
   display: flex;
   flex-direction: column;
-  align-items: center;   /* Center all children horizontally */
+  align-items: center;
   justify-content: flex-start;
-  min-height: 100vh;     /* Optional: full viewport height */
+  min-height: 100vh;
   width: 100%;
+  padding: 2rem 0;
 }
 
+/* 教程章节 - 每个学习模块的容器 */
 .tutorial-section {
   margin-bottom: 3rem;
   display: flex;
@@ -126,6 +183,7 @@ p {
   width: 100%;
 }
 
+/* 章节内容 - 限制宽度提升可读性 */
 .section-inner {
   width: min(900px, 100%);
   margin: 0 auto;
@@ -133,6 +191,7 @@ p {
   flex-direction: column;
 }
 
+/* 章节标题 - 清晰的视觉层次 */
 .section-header {
   display: flex;
   align-items: center;
@@ -143,6 +202,7 @@ p {
   width: 100%;
 }
 
+/* 模式编号 - 视觉化的学习进度 */
 .pattern-number {
   display: inline-flex;
   align-items: center;
@@ -154,20 +214,26 @@ p {
   border-radius: 50%;
   font-weight: 600;
   font-size: 0.875rem;
+  flex-shrink: 0; /* 防止在小屏幕上收缩 */
 }
 
+/* 章节标题 - 清晰的内容层次 */
 .section-title {
   font-size: 1.25rem;
   font-weight: 600;
   color: var(--foreground);
+  margin: 0;
 }
 
+/* 章节描述 - 辅助说明文字 */
 .section-description {
   color: var(--muted-foreground);
   font-size: 0.875rem;
   margin: 0;
+  line-height: 1.4;
 }
 
+/* 组件网格 - 响应式布局容器 */
 .widgets-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -175,7 +241,13 @@ p {
   width: 100%;
 }
 
-/* Widget Cards */
+/*
+🎴 Widget卡片 - 交互式学习组件
+• 卡片设计提供清晰的内容分组
+• 悬停效果增强交互体验
+• 阴影和圆角营造现代感
+• 响应式设计适配各种屏幕
+*/
 .widget {
   background: var(--card);
   color: var(--card-foreground);
@@ -186,13 +258,16 @@ p {
   transition: all 0.2s ease;
   width: 100%;
   box-sizing: border-box;
+  position: relative;
 }
 
+/* 悬停效果 - 提升用户体验 */
 .widget:hover {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   transform: translateY(-1px);
 }
 
+/* Widget标题 - 清晰的组件标识 */
 .widget h3 {
   display: flex;
   align-items: center;
@@ -200,13 +275,24 @@ p {
   margin-bottom: 1rem;
   font-size: 1rem;
   font-weight: 600;
+  color: var(--foreground);
 }
 
+/* Widget图标 - 视觉化的功能标识 */
 .widget-icon {
   font-size: 1.25rem;
+  flex-shrink: 0;
 }
 
-/* Buttons */
+/*
+🔘 按钮系统 - 一致的交互元素
+• 语义化的按钮变体
+• 统一的尺寸和间距
+• 无障碍访问支持
+• 流畅的动画效果
+*/
+
+/* 基础按钮样式 */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -221,98 +307,134 @@ p {
   border: none;
   cursor: pointer;
   gap: 0.5rem;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
+/* 焦点状态 - 键盘导航支持 */
 .btn:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
 }
 
+/* 禁用状态 - 清晰的视觉反馈 */
 .btn:disabled {
   pointer-events: none;
   opacity: 0.5;
+  cursor: not-allowed;
 }
 
+/* 主要按钮 - 重要操作 */
 .btn-primary {
   background: var(--primary);
   color: var(--primary-foreground);
 }
 
-.btn-primary:hover {
-  background: var(--primary);
+.btn-primary:hover:not(:disabled) {
   opacity: 0.9;
   transform: translateY(-1px);
 }
 
+/* 次要按钮 - 辅助操作 */
 .btn-secondary {
   background: var(--secondary);
   color: var(--secondary-foreground);
   border: 1px solid var(--border);
 }
 
-.btn-secondary:hover {
+.btn-secondary:hover:not(:disabled) {
   background: var(--muted);
   transform: translateY(-1px);
 }
 
+/* 危险按钮 - 删除等危险操作 */
 .btn-destructive {
   background: var(--destructive);
   color: var(--destructive-foreground);
 }
 
-.btn-destructive:hover {
-  background: var(--destructive);
+.btn-destructive:hover:not(:disabled) {
   opacity: 0.9;
   transform: translateY(-1px);
 }
 
-/* Form Elements */
+/*
+📝 表单元素 - 用户输入组件
+• 一致的视觉风格
+• 清晰的焦点状态
+• 无障碍访问支持
+• 响应式设计
+*/
+
+/* 输入框和文本域基础样式 */
 .input, .textarea {
   width: 100%;
   border-radius: 0.5rem;
   border: 1px solid var(--border);
   background: var(--background);
+  color: var(--foreground);
   padding: 0.75rem;
   font-size: 0.875rem;
+  font-family: inherit;
   transition: all 0.2s ease;
   outline: none;
+  box-sizing: border-box;
 }
 
+/* 输入框特定样式 */
 .input {
   height: 2.5rem;
 }
 
+/* 文本域特定样式 */
 .textarea {
   min-height: 4rem;
   resize: vertical;
+  line-height: 1.5;
 }
 
+/* 焦点状态 - 清晰的交互反馈 */
 .input:focus, .textarea:focus {
   border-color: var(--primary);
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
 }
 
+/* 错误信息 - 清晰的验证反馈 */
 .error {
   color: var(--destructive);
   font-size: 0.75rem;
   margin-top: 0.25rem;
   font-weight: 500;
+  display: block;
 }
 
-/* Status indicators */
+/*
+🚦 状态指示器 - 清晰的反馈系统
+• 语义化的颜色使用
+• 一致的状态表示
+• 良好的可读性
+*/
 .status-loading {
   color: var(--muted-foreground);
+  font-weight: 500;
 }
 
 .status-error {
   color: var(--destructive);
+  font-weight: 500;
 }
 
 .status-success {
   color: var(--success);
+  font-weight: 500;
 }
 
-/* Todo items */
+/*
+✅ Todo项目 - 交互式列表项
+• 清晰的悬停效果
+• 完成状态的视觉反馈
+• 良好的点击区域
+*/
 .todo-item {
   padding: 0.75rem;
   border-radius: 0.5rem;
@@ -320,6 +442,9 @@ p {
   transition: all 0.2s ease;
   border: 1px solid transparent;
   margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .todo-item:hover {
@@ -332,11 +457,17 @@ p {
   opacity: 0.6;
 }
 
-/* Notes */
+/*
+📝 笔记项目 - 简洁的列表样式
+• 清晰的分隔线
+• 悬停交互效果
+• 良好的内容层次
+*/
 .note-item {
   padding: 0.75rem;
   border-bottom: 1px solid var(--border);
   transition: all 0.2s ease;
+  word-wrap: break-word;
 }
 
 .note-item:hover {
@@ -347,7 +478,12 @@ p {
   border-bottom: none;
 }
 
-/* Code examples */
+/*
+💻 代码示例 - 语法高亮容器
+• 等宽字体确保代码对齐
+• 水平滚动处理长代码
+• 清晰的背景区分
+*/
 .code-example {
   background: var(--muted);
   border: 1px solid var(--border);
@@ -357,9 +493,15 @@ p {
   font-size: 0.875rem;
   margin: 0.75rem 0;
   overflow-x: auto;
+  line-height: 1.5;
 }
 
-/* Pattern badges */
+/*
+🏷️ 模式标签 - 学习标识
+• 清晰的分类标识
+• 一致的视觉风格
+• 良好的可读性
+*/
 .pattern-badge {
   display: inline-flex;
   align-items: center;
@@ -370,9 +512,15 @@ p {
   border-radius: 0.375rem;
   font-size: 0.75rem;
   font-weight: 500;
+  white-space: nowrap;
 }
 
-/* Header */
+/*
+🎯 页面头部 - 项目介绍区域
+• 清晰的项目标题
+• 简洁的描述信息
+• 良好的视觉层次
+*/
 .header {
   background: var(--card);
   border-bottom: 1px solid var(--border);
@@ -384,15 +532,22 @@ p {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  text-align: center;
 }
 
 .header-subtitle {
   color: var(--muted-foreground);
   font-size: 1rem;
   margin: 0;
+  line-height: 1.5;
 }
 
-/* Footer */
+/*
+📄 页面底部 - 项目信息
+• 简洁的项目说明
+• 居中的布局设计
+• 柔和的视觉效果
+*/
 .footer {
   background: var(--card);
   border-top: 1px solid var(--border);
@@ -405,29 +560,72 @@ p {
   margin: 0;
   font-size: 0.875rem;
   color: var(--muted-foreground);
+  line-height: 1.5;
 }
 
-/* Responsive */
+/*
+📱 响应式设计 - 移动端优化
+• 移动优先的设计原则
+• 合理的断点设置
+• 优化的触摸交互
+• 良好的可读性
+*/
 @media (max-width: 768px) {
+  /* 容器适配 - 减少边距节省空间 */
   .container {
     padding: 0 1rem;
   }
-  
+
+  /* 章节内容适配 */
   .section-inner {
     padding: 0 1rem;
   }
-  
+
+  /* 网格布局适配 - 单列显示 */
   .widgets-grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
-  
+
+  /* 标题尺寸适配 - 避免过大 */
   h1 {
     font-size: 1.75rem;
   }
-  
+
+  /* 章节头部适配 - 垂直布局 */
   .section-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
+  }
+
+  /* Widget适配 - 减少内边距 */
+  .widget {
+    padding: 1rem;
+  }
+
+  /* 按钮适配 - 更大的触摸区域 */
+  .btn {
+    min-height: 2.75rem;
+    padding: 0 1.25rem;
+  }
+}
+
+/* 超小屏幕适配 */
+@media (max-width: 480px) {
+  .dashboard-center {
+    padding: 1rem 0;
+  }
+
+  .tutorial-section {
+    margin-bottom: 2rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .widget {
+    padding: 0.75rem;
   }
 }

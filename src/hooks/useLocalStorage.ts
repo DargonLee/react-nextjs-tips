@@ -1,45 +1,65 @@
 /**
  * File: src/hooks/useLocalStorage.ts
- * 
- * Custom hook for localStorage management
- * Provides persistent state that survives page refreshes
+ *
+ * 自定义Hook：localStorage状态管理
+ * 演示如何创建可重用的状态逻辑
+ *
+ * 🎯 教学要点:
+ * • 自定义Hook提取可重用逻辑
+ * • SSR/客户端渲染兼容性处理
+ * • 错误边界和优雅降级
+ * • TypeScript泛型的使用
  */
 
 import { useState, useCallback, useEffect } from 'react';
 
 /**
- * Custom hook to manage localStorage state
- * @param key - localStorage key
- * @param initialValue - default value if no stored value exists
- * @returns [storedValue, setValue] - tuple similar to useState
+ * 管理localStorage状态的自定义Hook
+ *
+ * @param key localStorage键名
+ * @param initialValue 默认值
+ * @returns [storedValue, setValue] 类似useState的元组
+ *
+ * 🐍 Python对比: 类似创建一个可重用的状态管理类
+ * class LocalStorage:
+ *     def __init__(self, key, initial_value):
+ *         self.key = key
+ *         self.value = self.load() or initial_value
  */
-export function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T) => void] {
-  // 🐍 Python: Like creating a reusable function
-  const [storedValue, setStoredValue] = useState<T>(initialValue);
-  const [mounted, setMounted] = useState(false);
+export function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T | ((prev: T) => T)) => void] {
+  // 使用函数式初始化避免SSR问题
+  const [storedValue, setStoredValue] = useState<T>(() => {
+    // 服务端渲染时返回初始值
+    if (typeof window === 'undefined') {
+      return initialValue;
+    }
 
-  useEffect(() => {
-    setMounted(true);
     try {
       const item = window.localStorage.getItem(key);
-      if (item) {
-        setStoredValue(JSON.parse(item));
-      }
+      return item ? JSON.parse(item) : initialValue;
     } catch (error) {
-      console.error('Error reading from localStorage:', error);
+      console.warn(`读取localStorage键"${key}"时出错:`, error);
+      return initialValue;
     }
-  }, [key]);
+  });
 
-  const setValue = useCallback((value: T) => {
+  // 优化的setValue函数，支持函数式更新
+  const setValue = useCallback((value: T | ((prev: T) => T)) => {
     try {
-      setStoredValue(value);
-      if (mounted && typeof window !== 'undefined') {
-        window.localStorage.setItem(key, JSON.stringify(value));
+      // 支持函数式更新模式
+      const valueToStore = value instanceof Function ? value(storedValue) : value;
+
+      // 更新React状态
+      setStoredValue(valueToStore);
+
+      // 同步到localStorage（仅在客户端）
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem(key, JSON.stringify(valueToStore));
       }
     } catch (error) {
-      console.error('Error saving to localStorage:', error);
+      console.warn(`保存到localStorage键"${key}"时出错:`, error);
     }
-  }, [key, mounted]);
+  }, [key, storedValue]);
 
   return [storedValue, setValue];
-} 
+}
